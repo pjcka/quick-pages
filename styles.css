@@ -63,6 +63,18 @@ h1 {
   line-height: 1.55;
 }
 
+.links {
+  margin-top: 2rem;
+}
+
+.links a {
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.2em;
+}
+
 @media (max-width: 40rem) {
   .page {
     place-items: end start;
