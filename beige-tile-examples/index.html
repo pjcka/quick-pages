@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Making Beige Tile Feel Intentional</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #171512;
+      --muted: #665e55;
+      --soft-ink: #2c2721;
+      --paper: #fbfaf7;
+      --panel: #ffffff;
+      --line: #ddd5c9;
+      --olive: #59653f;
+      --black: #171512;
+      --bronze: #8a6a45;
+      --wood: #b98554;
+      --tile: #d7c5a8;
+      --tile-line: #c9b799;
+      --resource: #f4efe6;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(251,250,247,.95), rgba(251,250,247,.95)),
+        linear-gradient(90deg, var(--tile-line) 1px, transparent 1px),
+        linear-gradient(var(--tile-line) 1px, transparent 1px),
+        var(--tile);
+      background-size: auto, 48px 48px, 48px 48px, auto;
+    }
+
+    header, main, footer {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    header {
+      padding-top: 42px;
+      padding-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: #746a5f;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      color: var(--soft-ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(31px, 3.8vw, 48px);
+      font-weight: 400;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+      gap: 32px;
+      align-items: start;
+      margin-top: 20px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    p { margin: 0; color: var(--muted); }
+
+    .intro p {
+      max-width: 720px;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    .note {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-left: 3px solid #b9ab92;
+      background: rgba(255,255,255,.58);
+      color: #554d44;
+      border-radius: 8px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .swatches {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .swatch {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 34px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.82);
+      color: #4e473f;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,.16);
+      flex: 0 0 auto;
+    }
+
+    .dot.white { background: #f7f3eb; }
+    .dot.olive { background: var(--olive); }
+    .dot.wood { background: var(--wood); }
+    .dot.black { background: var(--black); }
+    .dot.bronze { background: var(--bronze); }
+    .dot.fiber { background: #c9b88f; }
+    .dot.jade { background: #7fa68d; }
+    .dot.cobalt { background: #174a8b; }
+    .dot.terracotta { background: #ba6642; }
+    .dot.lavender { background: #b9a5d8; }
+    .dot.saffron { background: #d89a22; }
+    .dot.teal { background: #1f7776; }
+
+    main { padding-bottom: 38px; }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 30px 0 16px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      max-width: 600px;
+      text-align: right;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 30px rgba(26,22,18,.08);
+    }
+
+    .image-wrap {
+      position: relative;
+      background: #e6ded2;
+    }
+
+    .image-link {
+      display: block;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(23,21,18,.86);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .body { padding: 16px 17px 18px; }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .body p { color: #504941; }
+
+    .tile-rule {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .resources {
+      margin-top: 34px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--resource);
+    }
+
+    .resources h2 { font-size: 24px; }
+
+    .resources p {
+      max-width: 900px;
+      margin-top: 8px;
+      color: #4f473d;
+    }
+
+    .resource-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .resource-links a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid #cfc4b5;
+      border-radius: 8px;
+      background: #fffaf2;
+      color: #26331f;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .resource-links a:hover { border-color: var(--olive); }
+
+    footer { padding-bottom: 36px; }
+
+    footer p {
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 700px) {
+      header, main, footer { padding-left: 16px; padding-right: 16px; }
+      .intro { grid-template-columns: 1fr; align-items: start; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 6px; text-align: left; }
+      .grid { grid-template-columns: 1fr; }
+      .swatch { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="eyebrow">Material study for existing tile</p>
+    <h1>Making beige tile feel intentional</h1>
+    <div class="intro">
+      <div>
+        <p>A quieter set of kitchen concepts, direct applications to Paul's kitchen photos, living, bath, and bedroom directions built around warm whites, olive, oak, blackened metal, bronze, stone, carpet, and a few saturated accents. The existing 12x12 beige porcelain tile and beige grout stay fixed where it exists; the room changes around it.</p>
+        <div class="swatches" aria-label="Suggested palette">
+          <span class="swatch"><span class="dot white"></span>Warm white</span>
+          <span class="swatch"><span class="dot olive"></span>Olive</span>
+          <span class="swatch"><span class="dot wood"></span>Oak or walnut</span>
+          <span class="swatch"><span class="dot black"></span>Black steel</span>
+          <span class="swatch"><span class="dot bronze"></span>Bronze</span>
+          <span class="swatch"><span class="dot fiber"></span>Linen or fiber</span>
+          <span class="swatch"><span class="dot jade"></span>Celadon or jade</span>
+          <span class="swatch"><span class="dot cobalt"></span>Cobalt</span>
+          <span class="swatch"><span class="dot terracotta"></span>Terracotta</span>
+          <span class="swatch"><span class="dot lavender"></span>Soft lavender</span>
+          <span class="swatch"><span class="dot saffron"></span>Saffron</span>
+          <span class="swatch"><span class="dot teal"></span>Teal</span>
+        </div>
+      </div>
+      <p class="note">The point is not to disguise the floor. It is to give the square beige grid enough material context that it reads as a calm neutral surface instead of a leftover finish.</p>
+    </div>
+  </header>
+
+  <main>
+    <div class="section-head">
+      <h2>Kitchens</h2>
+      <p>Twelve material-led directions: warm white, olive, oak, charcoal, terracotta, walnut, celadon, cobalt, citrus green, fine terrazzo, and wood cathedral ceilings.</p>
+    </div>
+    <section class="grid" aria-label="Kitchen concepts">
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-warm-white-olive-black-appliances-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Warm white plus olive vertical tile"><img src="images/kitchen-warm-white-olive-black-appliances-20260613.png" alt="Warm white kitchen with olive backsplash, black range, and beige 12x12 porcelain tile floor"></a><span class="tag">Kitchen 01</span></div><div class="body"><h3>Warm white plus olive vertical tile</h3><p>Flat warm-white fronts quiet the floor while olive, oak, black hardware, and bronze lighting make the beige grid feel current.</p><p class="tile-rule">Keep: low-contrast beige grout. Add: matte hardware, warm daylight, clear counters.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-olive-oak-runner-black-appliances-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Olive base, oak table, woven texture"><img src="images/kitchen-olive-oak-runner-black-appliances-20260613.png" alt="Olive and oak kitchen with black appliances and beige 12x12 porcelain tile floor"></a><span class="tag">Kitchen 02</span></div><div class="body"><h3>Olive base, oak table, woven texture</h3><p>A stronger cabinet color lets the beige floor recede. Oak and a simple runner bridge the tile without going beige-on-beige.</p><p class="tile-rule">Keep: the square grid visible. Add: black-framed glass and one large runner.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-limestone-olive-plaster-black-appliances-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Limestone counter, olive plaster"><img src="images/kitchen-limestone-olive-plaster-black-appliances-20260613.png" alt="Modern kitchen with limestone, olive plaster, black range, and beige 12x12 porcelain tile floor"></a><span class="tag">Kitchen 03</span></div><div class="body"><h3>Limestone counter, olive plaster</h3><p>Warm white cabinetry and a quiet olive range wall keep the floor neutral, not dated. Black stools add enough edge.</p><p class="tile-rule">Keep: plain beige tile. Add: honed stone and one muted green surface.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-celadon-jade-oak-black-appliances-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Celadon, jade, and pale oak"><img src="images/kitchen-celadon-jade-oak-black-appliances-20260613.png" alt="Modern kitchen with celadon and jade backsplash, pale oak cabinetry, black range, limestone, and beige tile floor"></a><span class="tag">Kitchen 04</span></div><div class="body"><h3>Celadon, jade, and pale oak</h3><p>A celadon ceramic wall gives the beige floor a fresher green context while pale oak, limestone, black appliances, and blackened metal keep it clean.</p><p class="tile-rule">Keep: floor low contrast. Add: flat fronts, pale stone, black stools.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-terracotta-island-oak-20260612.png" target="_blank" rel="noopener" aria-label="Open full-size image: Terracotta island with pale oak"><img src="images/kitchen-terracotta-island-oak-20260612.png" alt="Terracotta island kitchen with oak, warm white cabinets, and beige tile floor"></a><span class="tag">Kitchen 05</span></div><div class="body"><h3>Terracotta island with pale oak</h3><p>Terracotta connects to the floor warmth while warm white cabinets and black steel glass keep the room contemporary.</p><p class="tile-rule">Keep: square porcelain underfoot. Add: bronze faucet and simple pendants.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-olive-limestone-cobalt-black-appliances-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Olive, limestone, one cobalt hit"><img src="images/kitchen-olive-limestone-cobalt-black-appliances-20260613.png" alt="Olive kitchen with black range, limestone, cobalt bowl, and beige porcelain tile floor"></a><span class="tag">Kitchen 06</span></div><div class="body"><h3>Olive, limestone, one cobalt hit</h3><p>The cobalt accent works because the room is otherwise grounded in olive, oak, limestone, black steel, and warm white.</p><p class="tile-rule">Keep: the floor as a quiet field. Add: color in one or two controlled objects.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-bright-green-citrus-20260612.png" target="_blank" rel="noopener" aria-label="Open full-size image: Citrus green with orange leather"><img src="images/kitchen-bright-green-citrus-20260612.png" alt="Modern kitchen with citrus green tile, orange leather stools, oak, and beige 12x12 porcelain tile floor"></a><span class="tag">Kitchen 07</span></div><div class="body"><h3>Citrus green with orange leather</h3><p>Brighter green works when it is held to one wall and balanced by oak, warm white, black steel, and a few orange accents.</p><p class="tile-rule">Keep: beige tile fully visible. Add: color as clean blocks, not pattern.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-terrazzo-island-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Fine terrazzo island, oak, warm white"><img src="images/kitchen-terrazzo-island-20260613.png" alt="Modern kitchen with fine cream terrazzo island, oak cabinets, and beige tile floor"></a><span class="tag">Kitchen 08</span></div><div class="body"><h3>Fine terrazzo island, oak, warm white</h3><p>A quiet cream micro-terrazzo island gives the beige floor a designed material family without turning the room into a pattern story.</p><p class="tile-rule">Keep: floor grout low contrast. Add: tiny aggregate flecks, oak, bronze, and warm white.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-warm-white-olive-wood-cathedral-ceiling-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Warm white, olive, wood cathedral ceiling"><img src="images/kitchen-warm-white-olive-wood-cathedral-ceiling-20260613.png" alt="Warm white and olive kitchen with beige 12x12 tile floor and warm wood cathedral ceiling"></a><span class="tag">Kitchen 09</span></div><div class="body"><h3>Warm white, olive, wood cathedral ceiling</h3><p>The ceiling becomes the main warmth, so the cabinets can stay quiet while olive tile, oak shelves, and blackened hardware sharpen the beige floor.</p><p class="tile-rule">Keep: visible tile foreground. Add: warm rafters, clerestory light, restrained black appliances.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-olive-terrazzo-wood-cathedral-ceiling-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Olive, terrazzo, open ceiling"><img src="images/kitchen-olive-terrazzo-wood-cathedral-ceiling-20260613.png" alt="Olive and terrazzo kitchen with beige porcelain tile floor and exposed warm wood cathedral ceiling"></a><span class="tag">Kitchen 10</span></div><div class="body"><h3>Olive, terrazzo, open ceiling</h3><p>Olive bases and a cream terrazzo island give the floor a modern material family while the vaulted wood ceiling keeps the room grounded.</p><p class="tile-rule">Keep: beige grid uninterrupted. Add: woven pendants, pale oak, and blackened metal.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-olive-backsplash-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Olive backsplash, quiet wood ceiling"><img src="images/kitchen-olive-backsplash-wood-cathedral-context-20260613.png" alt="Restrained kitchen with olive backsplash, beige tile floor, dark integrated cooking surface, and warm wood cathedral ceiling"></a><span class="tag">Kitchen 11</span></div><div class="body"><h3>Olive backsplash, quiet wood ceiling</h3><p>A normal counter-height view keeps attention on the beige tile, warm white fronts, olive ceramic, oak shelves, and blackened details.</p><p class="tile-rule">Keep: tile foreground and low contrast. Add: wood ceiling as context, not the focal point.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-oak-olive-island-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak cabinets, olive island, wood ceiling"><img src="images/kitchen-oak-olive-island-wood-cathedral-context-20260613.png" alt="Oak and olive kitchen with beige tile floor, cream terrazzo counter, and warm wood cathedral ceiling"></a><span class="tag">Kitchen 12</span></div><div class="body"><h3>Oak cabinets, olive island, wood ceiling</h3><p>Pale oak and a muted olive island give the existing floor enough material support while the ceiling stays a small natural cue overhead.</p><p class="tile-rule">Keep: simple cabinet planes. Add: cream terrazzo, bronze, and matte black pulls.</p></div></article>
+    </section>
+
+    <div class="section-head">
+      <h2>Paul's Kitchen Applications</h2>
+      <p>Render-quality redesign studies for Paul's kitchen direction: each keeps the beige tile floor, black louvered windows, warm wood context, integrated dark appliances, and clean counters while varying the cabinet refacing and backsplash height.</p>
+    </div>
+    <section class="grid" aria-label="Paul's kitchen photo applications">
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-01-oak-slab-standard-olive-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak slab, standard olive splash"><img src="images/kitchen-paula-reface-01-oak-slab-standard-olive-20260613.png" alt="Render of Paul's kitchen direction with warm oak slab cabinet refacing, standard-height olive tile backsplash, black integrated appliances, beige tile floor, and clean counters"></a><span class="tag">Paul 01</span></div><div class="body"><h3>Oak slab, standard olive splash</h3><p>Warm oak slab fronts replace the old cream-and-wood rails while the olive tile stays at normal counter-to-window height. Black integrated appliances keep the counter run quiet.</p><p class="tile-rule">Cabinets: warm oak slab. Backsplash: standard-height olive vertical tile.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-02-olive-lowers-full-cream-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Olive lowers, full-height cream tile"><img src="images/kitchen-paula-reface-02-olive-lowers-full-cream-20260613.png" alt="Render of Paul's sink wall with olive painted lower cabinet refacing, warm white uppers, full-height cream vertical tile around black louvered windows, black dishwasher, beige tile floor, and clear counters"></a><span class="tag">Paul 02</span></div><div class="body"><h3>Olive lowers, full-height cream tile</h3><p>Olive painted lowers ground the sink wall with warm-white uppers above. The cream vertical tile climbs around the window, making the backsplash a full-height architectural field.</p><p class="tile-rule">Cabinets: olive lowers with warm-white uppers. Backsplash: full-height cream tile wall.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-04-walnut-lowers-partial-cream-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Walnut lowers, partial cream tile"><img src="images/kitchen-paula-reface-04-walnut-lowers-partial-cream-20260613.png" alt="Render of Paul's kitchen with walnut lower cabinet refacing, warm-white tall cabinets, partial cream vertical tile field around the sink, black dishwasher, beige tile floor, and clean counters"></a><span class="tag">Paul 03</span></div><div class="body"><h3>Walnut lowers, partial cream tile</h3><p>Walnut lowers give the beige floor a richer material partner. The cream tile is deliberately partial around the sink and short return, leaving warm plaster above.</p><p class="tile-rule">Cabinets: walnut lowers with warm-white tall fronts. Backsplash: partial vertical tile field.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-04-warm-white-full-olive-realistic-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Warm white, full olive window wall"><img src="images/kitchen-paula-reface-04-warm-white-full-olive-realistic-20260613.png" alt="Realistic render of Paul's kitchen with warm white slab refacing, full-height muted olive tile on the sink wall, beige tile floor, black louvered windows, and clean counters"></a><span class="tag">Paul 04</span></div><div class="body"><h3>Warm white, full olive window wall</h3><p>Warm-white slab fronts stay quiet while olive vertical tile becomes the main feature around the sink window. The peninsula, soffit, beige floor, and black windows stay in ordinary kitchen proportions.</p><p class="tile-rule">Cabinets: warm-white slab with oak pulls. Backsplash: full-height olive sink wall.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-05-oak-slab-low-curb-realistic-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak slab, low stone curb"><img src="images/kitchen-paula-reface-05-oak-slab-low-curb-realistic-20260613.png" alt="Realistic render of Paul's kitchen with natural oak slab lower cabinet refacing, warm white uppers, short stone curb backsplash, beige tile floor, and clear counters"></a><span class="tag">Paul 05</span></div><div class="body"><h3>Oak slab, low stone curb</h3><p>The simplest backsplash option is a short stone curb with plaster above. Natural oak slab lowers do the material work without changing the kitchen's actual L-shaped footprint.</p><p class="tile-rule">Cabinets: natural oak slab lowers. Backsplash: 4-6 inch cream stone curb.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-06-sage-slab-counter-upper-realistic-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Sage slab, counter-to-upper tile"><img src="images/kitchen-paula-reface-06-sage-slab-counter-upper-realistic-20260613.png" alt="Realistic render of Paul's kitchen with muted sage slab lower cabinet refacing, warm white uppers, counter-to-upper cream tile backsplash, beige tile floor, and clean counters"></a><span class="tag">Paul 06</span></div><div class="body"><h3>Sage slab, counter-to-upper tile</h3><p>Muted sage lowers add color at cabinet height while the pale vertical tile stays contained between counter and upper/soffit lines. It reads as refacing, not a full reconstruction.</p><p class="tile-rule">Cabinets: muted sage lowers with white uppers. Backsplash: counter-to-upper cream tile.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-07-walnut-limestone-slab-realistic-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Walnut lowers, limestone slab feature"><img src="images/kitchen-paula-reface-07-walnut-limestone-slab-realistic-20260613.png" alt="Realistic render of Paul's kitchen with walnut lower cabinet refacing, warm white uppers, a restrained limestone slab backsplash feature zone, beige tile floor, and clear counters"></a><span class="tag">Paul 07</span></div><div class="body"><h3>Walnut lowers, limestone slab feature</h3><p>Walnut lowers are paired with a quiet limestone slab feature zone, keeping the existing refrigerator wall, peninsula cooktop, and window wall believable.</p><p class="tile-rule">Cabinets: walnut lowers with warm-white uppers. Backsplash: restrained limestone slab zone.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-08-charcoal-oak-window-height-realistic-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Charcoal lowers, window-height cream tile"><img src="images/kitchen-paula-reface-08-charcoal-oak-window-height-realistic-20260613.png" alt="Realistic render of Paul's kitchen with matte charcoal lower cabinet refacing, oak accent pulls, window-height cream tile near the sink, beige tile floor, and clean counters"></a><span class="tag">Paul 08</span></div><div class="body"><h3>Charcoal lowers, window-height tile</h3><p>Charcoal lowers sharpen the beige tile floor while oak pulls keep the room warm. The tile rises only to the window-height zone, then returns to plaster.</p><p class="tile-rule">Cabinets: charcoal lowers with oak accents. Backsplash: window-height cream tile zone.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-09-olive-oak-cooktop-zone-realistic-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Olive lowers, cooktop-zone feature"><img src="images/kitchen-paula-reface-09-olive-oak-cooktop-zone-realistic-20260613.png" alt="Realistic render of Paul's kitchen with olive slab lower cabinet refacing, oak upper panels, a contained cooktop-zone backsplash feature, beige tile floor, and uncluttered counters"></a><span class="tag">Paul 09</span></div><div class="body"><h3>Olive lowers, cooktop-zone feature</h3><p>Olive slab lowers and oak upper planes keep the palette grounded. The backsplash emphasis shifts to the cooktop/peninsula side instead of covering every wall.</p><p class="tile-rule">Cabinets: olive lowers with oak upper faces. Backsplash: contained cooktop-zone feature.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-10-warm-white-sage-standard-realistic-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Warm white shaker-slab, sage standard splash"><img src="images/kitchen-paula-reface-10-warm-white-sage-standard-realistic-20260613.png" alt="Realistic render of Paul's kitchen with warm white simple shaker-slab cabinet refacing, standard-height pale sage backsplash, beige tile floor, and clean counters"></a><span class="tag">Paul 10</span></div><div class="body"><h3>Warm white, sage standard splash</h3><p>A narrow-frame shaker-slab front is the most traditional option in the set. Pale sage tile stays at standard backsplash height and leaves the walls and soffit quiet.</p><p class="tile-rule">Cabinets: warm-white shaker-slab. Backsplash: standard-height pale sage tile.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/kitchen-paula-reface-11-greige-low-olive-band-realistic-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Greige slab, low olive band"><img src="images/kitchen-paula-reface-11-greige-low-olive-band-realistic-20260613.png" alt="Realistic render of Paul's kitchen with soft greige slab lower cabinet refacing, oak pulls, a low muted olive backsplash band, beige tile floor, and clear counters"></a><span class="tag">Paul 11</span></div><div class="body"><h3>Greige slab, low olive band</h3><p>Soft greige fronts are deliberately restrained, with oak pulls adding enough warmth against the beige floor. The olive note becomes a low band rather than a full wall.</p><p class="tile-rule">Cabinets: soft greige slab with oak pulls. Backsplash: low muted olive band.</p></div></article>
+    </section>
+
+    <div class="section-head">
+      <h2>Living Rooms</h2>
+      <p>The blue vintage-carpet direction is gone. These use plain rugs, modern upholstery, blackened metal, wood, plaster, saturated accents, brighter greens, and restrained cathedral ceiling warmth.</p>
+    </div>
+    <section class="grid" aria-label="Living room concepts">
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-natural-rug-olive-render.png" target="_blank" rel="noopener" aria-label="Open full-size image: Big natural rug, visible tile border"><img src="images/living-natural-rug-olive-render.png" alt="Warm modern living room with natural rug, olive chair, and beige tile border"></a><span class="tag">Living 01</span></div><div class="body"><h3>Big natural rug, visible tile border</h3><p>The rug holds the seating area while linen, walnut, black metal, and olive upholstery keep the tile from reading builder beige.</p><p class="tile-rule">Keep: tile at the perimeter. Avoid: tiny rugs and overstuffed seating.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-soft-lavender-oak-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Soft lavender, oak, and linen"><img src="images/living-soft-lavender-oak-20260613.png" alt="Contemporary living room with soft lavender chair and art, oak shelving, linen sofa, plain rug, and beige tile border"></a><span class="tag">Living 02</span></div><div class="body"><h3>Soft lavender, oak, and linen</h3><p>This replaces the disliked blue-rug direction with gentler color. The rug stays plain; the chair and art add lift without darkening the room.</p><p class="tile-rule">Keep: rug oversized and simple. Avoid: antique blue patterns.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-olive-cobalt-plaster-20260612.png" target="_blank" rel="noopener" aria-label="Open full-size image: Ivory linen, olive chair, cobalt art"><img src="images/living-olive-cobalt-plaster-20260612.png" alt="Living room with ivory linen sofa, olive chair, cobalt art, and beige tile floor"></a><span class="tag">Living 03</span></div><div class="body"><h3>Ivory linen, olive chair, cobalt art</h3><p>Warm plaster and oak make the floor feel settled, while cobalt appears as a clean art accent instead of a rug pattern.</p><p class="tile-rule">Keep: plain warm-white rug. Add: one strong artwork and blackened steel.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-turquoise-teal-oak-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Turquoise, teal, and oak"><img src="images/living-turquoise-teal-oak-20260613.png" alt="Modern living room with turquoise and teal accents, oak media wall, linen sofa, plain rug, and beige tile floor"></a><span class="tag">Living 04</span></div><div class="body"><h3>Turquoise, teal, and oak</h3><p>A plain rug controls the tile field. Turquoise, teal, oak, white stone, and blackened metal add color without turning the room into a pattern story.</p><p class="tile-rule">Keep: visible beige tile border. Avoid: patterned rugs and decorative clutter.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-terracotta-cobalt-oak-20260612.png" target="_blank" rel="noopener" aria-label="Open full-size image: Terracotta sofa, cobalt chair"><img src="images/living-terracotta-cobalt-oak-20260612.png" alt="Terracotta sofa living room with cobalt chair, oak shelving, plain rug, and beige tile floor"></a><span class="tag">Living 05</span></div><div class="body"><h3>Terracotta sofa, cobalt chair</h3><p>Color feels modern when it is blocked into simple forms. Oak shelves, plaster, and black metal keep the palette architectural.</p><p class="tile-rule">Keep: rug low and plain. Add: saturated color in sculptural shapes.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-saffron-black-oak-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Saffron chair with black, white, and oak"><img src="images/living-saffron-black-oak-20260613.png" alt="Modern living room with saffron chair, black and white art, oak built-ins, plain rug, and beige tile floor"></a><span class="tag">Living 06</span></div><div class="body"><h3>Saffron with black, white, and oak</h3><p>Black, white, and oak give the beige tile structure. One saffron chair adds saturated color without making the palette heavy.</p><p class="tile-rule">Keep: beige tile as the base. Add: black stone, bronze sconces, oak built-ins.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-coral-art-terracotta-20260612.png" target="_blank" rel="noopener" aria-label="Open full-size image: Coral chair and terracotta art"><img src="images/living-coral-art-terracotta-20260612.png" alt="Modern living room with coral chair, terracotta art, plain rug, and beige tile floor"></a><span class="tag">Living 07</span></div><div class="body"><h3>Coral chair and terracotta art</h3><p>Orange reads cleaner when it is in simple upholstery and large art, with linen, walnut, black steel, and a plain rug doing the quiet work.</p><p class="tile-rule">Keep: tile at the perimeter. Add: warm color in a few confident pieces.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-bright-green-oak-20260612.png" target="_blank" rel="noopener" aria-label="Open full-size image: Bright green with oak and stone"><img src="images/living-bright-green-oak-20260612.png" alt="Modern living room with bright green lounge chair, oak, stone, plain rug, and beige tile floor"></a><span class="tag">Living 08</span></div><div class="body"><h3>Bright green with oak and stone</h3><p>A clearer green can feel sophisticated when the rest of the room stays natural: linen, oak, stone, black steel, and warm plaster.</p><p class="tile-rule">Keep: the beige grid visible. Add: green as upholstery and art, not wall-to-wall color.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-olive-linen-wood-cathedral-ceiling-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Linen, olive, vaulted wood"><img src="images/living-olive-linen-wood-cathedral-ceiling-20260613.png" alt="Open living room with linen sofa, olive chair, beige tile floor, and warm wood cathedral ceiling"></a><span class="tag">Living 09</span></div><div class="body"><h3>Linen, olive, vaulted wood</h3><p>A natural rug holds the seating while olive, walnut, blackened metal, and the ceiling beams give the beige tile enough structure.</p><p class="tile-rule">Keep: tile border visible. Add: clerestory light and a simple natural rug.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-terracotta-teal-wood-cathedral-ceiling-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Terracotta, teal, dining view"><img src="images/living-terracotta-teal-wood-cathedral-ceiling-20260613.png" alt="Open living and dining area with terracotta seating, teal art, beige tile floor, and warm wood cathedral ceiling"></a><span class="tag">Living 10</span></div><div class="body"><h3>Terracotta, teal, dining view</h3><p>Saturated color stays controlled in upholstery and art. The plain rug, wood ceiling, oak table, and beige tile do the quiet work.</p><p class="tile-rule">Keep: floor and ceiling both visible. Avoid: busy rugs or small scattered color.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-linen-olive-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Linen sofa, olive chair, quiet ceiling"><img src="images/living-linen-olive-wood-cathedral-context-20260613.png" alt="Minimal living room with linen sofa, olive chair, plain rug, beige tile floor, and warm wood cathedral ceiling"></a><span class="tag">Living 11</span></div><div class="body"><h3>Linen sofa, olive chair, quiet ceiling</h3><p>The plain rug controls the seating zone while the beige tile border, walnut, olive, and small band of ceiling keep the room grounded.</p><p class="tile-rule">Keep: tile visible at the rug edge. Add: low furniture, simple art, blackened metal.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/living-terracotta-teal-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Terracotta chair, teal art, quiet ceiling"><img src="images/living-terracotta-teal-wood-cathedral-context-20260613.png" alt="Restrained living room with terracotta chair, teal art, plain rug, beige tile floor, and warm wood cathedral ceiling"></a><span class="tag">Living 12</span></div><div class="body"><h3>Terracotta chair, teal art, quiet ceiling</h3><p>Color stays in one chair and one artwork, leaving the beige tile, ivory rug, warm plaster, and oak casework to do the calm work.</p><p class="tile-rule">Keep: composition tight and simple. Avoid: patterned rugs and ceiling-first framing.</p></div></article>
+    </section>
+
+    <div class="section-head">
+      <h2>Bathrooms</h2>
+      <p>Use contrast and cleaner planes: oak, white stone, plaster, clear glass, black or bronze fixtures, fine terrazzo, one stronger accent surface, and visible wood ceiling structure.</p>
+    </div>
+    <section class="grid" aria-label="Bathroom concepts">
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-oak-olive-black-render.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak vanity, olive shower, black frame"><img src="images/bath-oak-olive-black-render.png" alt="Bathroom with oak vanity, olive shower accent, black fixtures, and beige tile floor"></a><span class="tag">Bath 01</span></div><div class="body"><h3>Oak vanity, olive shower, black frame</h3><p>A floating oak vanity lifts the room visually. Olive vertical tile and black fixtures give the beige floor context.</p><p class="tile-rule">Keep: floor grid clean. Add: large mirror, clear glass, white walls.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-double-vanity-bronze-render.png" target="_blank" rel="noopener" aria-label="Open full-size image: White oak and bronze, no beige walls"><img src="images/bath-double-vanity-bronze-render.png" alt="Primary bathroom with white oak double vanity, bronze hardware, and beige tile floor"></a><span class="tag">Bath 02</span></div><div class="body"><h3>White oak and bronze, no beige walls</h3><p>White oak, bronze, white surfaces, and a woven mat make the existing tile feel like a warm base for a cleaner room.</p><p class="tile-rule">Keep: beige grout low contrast. Avoid: ornate vanities and tan paint.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-oak-olive-black-20260612.png" target="_blank" rel="noopener" aria-label="Open full-size image: Long oak vanity, olive wet wall"><img src="images/bath-oak-olive-black-20260612.png" alt="Modern bathroom with oak vanity, olive shower tile, black glass, and beige tile floor"></a><span class="tag">Bath 03</span></div><div class="body"><h3>Long oak vanity, olive wet wall</h3><p>The beige floor works when the vanity is light, the walls are warm white, and the shower brings a clean olive vertical plane.</p><p class="tile-rule">Keep: square tile visible. Add: matte black fixtures and linen towels.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-pistachio-celadon-oak-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Pistachio shower, oak vanity"><img src="images/bath-pistachio-celadon-oak-20260613.png" alt="Modern bathroom with pistachio and celadon shower tile, oak vanity, bronze fixtures, white stone, and beige tile floor"></a><span class="tag">Bath 04</span></div><div class="body"><h3>Pistachio shower, oak vanity</h3><p>A pale green shower plane makes the beige floor look intentional. White stone, oak, bronze, and clear glass keep the room crisp.</p><p class="tile-rule">Keep: floor untouched. Add: flat-front vanity and warm white plaster.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-charcoal-terracotta-bronze-20260612.png" target="_blank" rel="noopener" aria-label="Open full-size image: Charcoal vanity, terracotta shower"><img src="images/bath-charcoal-terracotta-bronze-20260612.png" alt="Charcoal vanity bathroom with terracotta shower wall, bronze fixtures, and beige tile floor"></a><span class="tag">Bath 05</span></div><div class="body"><h3>Charcoal vanity, terracotta shower</h3><p>Charcoal sharpens the room immediately, while terracotta and bronze keep the beige tile in a warm modern family.</p><p class="tile-rule">Keep: beige floor as the only grid. Add: clear glass and one saturated wet wall.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-cobalt-oak-bronze-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Cobalt niche, oak, and bronze"><img src="images/bath-cobalt-oak-bronze-20260613.png" alt="Modern bathroom with cobalt niche, oak vanity, bronze fixtures, blackened metal shower frame, and beige tile floor"></a><span class="tag">Bath 06</span></div><div class="body"><h3>Cobalt niche, oak, and bronze</h3><p>Cobalt works in a smaller dose here: one clean niche and a few objects, with oak, bronze, blackened metal, and white stone doing the quiet work.</p><p class="tile-rule">Keep: grout beige or creamier. Add: oak, bronze, black steel, and white stone.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-terrazzo-vanity-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Fine terrazzo vanity, oak, bronze"><img src="images/bath-terrazzo-vanity-20260613.png" alt="Modern bathroom with fine cream terrazzo vanity and backsplash, oak drawers, bronze fixtures, and beige tile floor"></a><span class="tag">Bath 07</span></div><div class="body"><h3>Fine terrazzo vanity, oak, bronze</h3><p>Micro-terrazzo belongs on the vanity and wet-wall surfaces here, so the existing beige tile floor stays the quiet base.</p><p class="tile-rule">Keep: floor tile untouched. Add: fine cream aggregate, oak, bronze, and clear glass.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-orange-shower-tile-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Orange shower tile, oak, bronze"><img src="images/bath-orange-shower-tile-20260613.png" alt="Modern bathroom with orange shower tile, oak vanity, bronze fixtures, and beige tile floor"></a><span class="tag">Bath 08</span></div><div class="body"><h3>Orange shower tile, oak, bronze</h3><p>Orange works when it is an intentional shower plane, balanced by oak, white stone, bronze, black steel, and warm plaster.</p><p class="tile-rule">Keep: beige tile as the ground. Add: orange ceramic in one architectural surface.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-oak-olive-wood-cathedral-ceiling-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak vanity, olive shower, wood ceiling"><img src="images/bath-oak-olive-wood-cathedral-ceiling-20260613.png" alt="Bathroom with oak vanity, olive shower tile, beige floor tile, and warm wood vaulted ceiling"></a><span class="tag">Bath 09</span></div><div class="body"><h3>Oak vanity, olive shower, wood ceiling</h3><p>The ceiling makes the oak vanity feel native to the room, while olive tile and black fixtures give the beige floor a cleaner frame.</p><p class="tile-rule">Keep: square floor visible. Add: high windows, clear glass, and matte black details.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-oak-terrazzo-wood-cathedral-ceiling-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak, terrazzo, clerestory bath"><img src="images/bath-oak-terrazzo-wood-cathedral-ceiling-20260613.png" alt="Bathroom with oak vanity, cream terrazzo, beige tile floor, and warm wood cathedral ceiling"></a><span class="tag">Bath 10</span></div><div class="body"><h3>Oak, terrazzo, clerestory bath</h3><p>Fine terrazzo, oak, bronze, and a small celadon wet-wall moment make the beige floor read as part of a deliberate warm palette.</p><p class="tile-rule">Keep: floor low contrast. Add: warm ceiling boards and simple bronze fixtures.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-oak-olive-shower-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak vanity, olive shower, quiet ceiling"><img src="images/bath-oak-olive-shower-wood-cathedral-context-20260613.png" alt="Restrained bathroom with oak vanity, olive shower tile, beige floor tile, matte black fixtures, and warm wood cathedral ceiling"></a><span class="tag">Bath 11</span></div><div class="body"><h3>Oak vanity, olive shower, quiet ceiling</h3><p>A tighter vanity-and-shower view keeps the beige floor primary while oak, olive vertical tile, clear glass, and black fixtures sharpen it.</p><p class="tile-rule">Keep: floor grid clear. Add: ceiling boards only as a small architectural cue.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bath-oak-terrazzo-celadon-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak, terrazzo, celadon shower"><img src="images/bath-oak-terrazzo-celadon-wood-cathedral-context-20260613.png" alt="Compact bathroom with oak vanity, cream terrazzo backsplash, celadon shower tile, beige tile floor, and warm wood cathedral ceiling"></a><span class="tag">Bath 12</span></div><div class="body"><h3>Oak, terrazzo, celadon shower</h3><p>Cream terrazzo and pale oak connect to the floor, while the celadon shower and modest wood ceiling keep the palette fresh.</p><p class="tile-rule">Keep: beige tile as the quiet base. Add: matte black or bronze details, clear glass.</p></div></article>
+    </section>
+
+    <div class="section-head">
+      <h2>Bedrooms</h2>
+      <p>Carpeted bedroom directions for the same house context: warm wood cathedral ceilings, quiet bedding, oak or walnut, muted accents, and normal tighter compositions instead of wide ceiling-first views.</p>
+    </div>
+    <section class="grid" aria-label="Bedroom concepts">
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-olive-linen-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Olive linen, carpet, quiet ceiling"><img src="images/bedroom-olive-linen-carpet-wood-cathedral-context-20260613.png" alt="Minimal carpeted bedroom with linen bedding, olive accents, oak nightstands, black sconces, and warm wood cathedral ceiling"></a><span class="tag">Bedroom 01</span></div><div class="body"><h3>Olive linen, carpet, quiet ceiling</h3><p>Low ivory carpet and simple bedding keep the room soft while olive pillows, oak, black sconces, and a modest wood ceiling cue connect it to the rest of the palette.</p><p class="tile-rule">Keep: carpet wall-to-wall. Add: warm wood overhead as context, not the whole view.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-terracotta-pillow-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Terracotta pillow, oak, carpet"><img src="images/bedroom-terracotta-pillow-carpet-wood-cathedral-context-20260613.png" alt="Compact carpeted guest bedroom with oak bed, terracotta pillow, black window frames, and warm wood cathedral ceiling"></a><span class="tag">Bedroom 02</span></div><div class="body"><h3>Terracotta pillow, oak, carpet</h3><p>A single terracotta pillow gives the beige carpet enough warmth without making the room busy. Oak and blackened metal keep it crisp.</p><p class="tile-rule">Keep: tight natural framing. Add: one warm accent and simple linen bedding.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-walnut-celadon-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Walnut headboard, celadon accent"><img src="images/bedroom-walnut-celadon-carpet-wood-cathedral-context-20260613.png" alt="Carpeted bedroom with walnut headboard wall, celadon pillow, cream stone side table, black sconces, and wood cathedral ceiling"></a><span class="tag">Bedroom 03</span></div><div class="body"><h3>Walnut headboard, celadon accent</h3><p>Walnut gives the soft carpet an architectural edge, while celadon, cream stone, and black lamps keep the palette calm and current.</p><p class="tile-rule">Keep: carpet visible in the foreground. Add: one muted green note and warm wood.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-lavender-oak-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Lavender, oak wardrobe, carpet"><img src="images/bedroom-lavender-oak-carpet-wood-cathedral-context-20260613.png" alt="Minimal carpeted bedroom with upholstered beige bed, lavender pillow, oak wardrobe, bronze pendant, and wood cathedral ceiling"></a><span class="tag">Bedroom 04</span></div><div class="body"><h3>Lavender, oak wardrobe, carpet</h3><p>Soft lavender replaces busier color with a quieter lift. The oak wardrobe and ceiling make the carpet feel deliberately warm.</p><p class="tile-rule">Keep: furniture planes simple. Add: muted color in one pillow or artwork.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-olive-bench-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Olive bench, walnut bed, carpet"><img src="images/bedroom-olive-bench-carpet-wood-cathedral-context-20260613.png" alt="Quiet carpeted bedroom with walnut bed, olive bench, black reading lamp, ivory bedding, and warm wood cathedral ceiling"></a><span class="tag">Bedroom 05</span></div><div class="body"><h3>Olive bench, walnut bed, carpet</h3><p>The olive bench makes the beige carpet feel connected to the green directions elsewhere, while walnut and ivory bedding keep the room minimal.</p><p class="tile-rule">Keep: broad carpet field. Add: one low upholstered accent and blackened metal.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-cobalt-vase-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Cobalt vase, oak bed, carpet"><img src="images/bedroom-cobalt-vase-carpet-wood-cathedral-context-20260613.png" alt="Minimal carpeted bedroom with oak bed, white linen bedding, small cobalt vase, black sconce, and wooden cathedral ceiling"></a><span class="tag">Bedroom 06</span></div><div class="body"><h3>Cobalt vase, oak bed, carpet</h3><p>Cobalt works as a small ceramic note, not a room theme. Oak, white linen, beige carpet, and wood ceiling do the quiet work.</p><p class="tile-rule">Keep: color small and controlled. Add: plain bedding and one black fixture.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-saffron-linen-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Saffron pillow, oak slat headboard"><img src="images/bedroom-saffron-linen-carpet-wood-cathedral-context-20260613.png" alt="Carpeted bedroom with oak slat headboard, ivory bedding, saffron pillow, bronze sconce, and warm wood cathedral ceiling"></a><span class="tag">Bedroom 07</span></div><div class="body"><h3>Saffron pillow, oak slat headboard</h3><p>A saffron pillow adds warmth without competing with the carpet. Oak slats and bronze lighting keep the room structured.</p><p class="tile-rule">Keep: ceiling as a small top cue. Add: warm accent color in one soft object.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-oak-dresser-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Oak dresser, olive ceramic lamp"><img src="images/bedroom-oak-dresser-carpet-wood-cathedral-context-20260613.png" alt="Calm carpeted bedroom with linen upholstered bed, pale oak dresser, olive ceramic lamp, ivory curtains, and wood cathedral ceiling"></a><span class="tag">Bedroom 08</span></div><div class="body"><h3>Oak dresser, olive ceramic lamp</h3><p>Pale oak storage gives the carpet a built-in material partner, while the olive lamp and warm ceiling stay quiet.</p><p class="tile-rule">Keep: normal lens and straight lines. Add: low contrast carpet and pale oak.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-terracotta-throw-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Terracotta throw, walnut platform bed"><img src="images/bedroom-terracotta-throw-carpet-wood-cathedral-context-20260613.png" alt="Small carpeted bedroom with walnut platform bed, terracotta throw, black wall sconce, minimal artwork, and wood cathedral ceiling"></a><span class="tag">Bedroom 09</span></div><div class="body"><h3>Terracotta throw, walnut platform bed</h3><p>Terracotta belongs as one broad textile block. Walnut, cream linen, and the ceiling boards carry the rest of the warmth.</p><p class="tile-rule">Keep: simple surfaces. Add: warm color in one controlled layer.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-celadon-oak-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Celadon throw, pale oak bed"><img src="images/bedroom-celadon-oak-carpet-wood-cathedral-context-20260613.png" alt="Minimal carpeted bedroom with pale oak bed, celadon throw, bronze bedside lamp, black window frame, and warm wood cathedral ceiling"></a><span class="tag">Bedroom 10</span></div><div class="body"><h3>Celadon throw, pale oak bed</h3><p>Celadon softens the beige carpet without turning the room pastel. Pale oak and bronze make the palette feel intentional.</p><p class="tile-rule">Keep: carpet as the floor finish. Add: one muted textile and warm metal.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-charcoal-pillow-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Charcoal pillow, walnut nightstand"><img src="images/bedroom-charcoal-pillow-carpet-wood-cathedral-context-20260613.png" alt="Minimal carpeted bedroom with cream upholstered headboard, walnut nightstand, charcoal pillow, bronze wall lamp, olive-gray drapery, and wood cathedral ceiling"></a><span class="tag">Bedroom 11</span></div><div class="body"><h3>Charcoal pillow, walnut nightstand</h3><p>Small charcoal and bronze details sharpen the soft carpet and cream bedding without making the bedroom heavy.</p><p class="tile-rule">Keep: muted bedding and visible carpet. Add: dark accents only in small doses.</p></div></article>
+      <article class="card"><div class="image-wrap"><a class="image-link" href="images/bedroom-teal-pillow-carpet-wood-cathedral-context-20260613.png" target="_blank" rel="noopener" aria-label="Open full-size image: Teal pillow, oak shelf, carpet"><img src="images/bedroom-teal-pillow-carpet-wood-cathedral-context-20260613.png" alt="Narrow carpeted guest bedroom with oak platform bed, muted teal pillow, black metal sconce, built-in oak shelf, and wood cathedral ceiling"></a><span class="tag">Bedroom 12</span></div><div class="body"><h3>Teal pillow, oak shelf, carpet</h3><p>Teal stays quiet when it is just one pillow. Oak, linen, carpet, and the modest ceiling cue keep the room closer to the first minimal directions.</p><p class="tile-rule">Keep: tighter bedroom composition. Avoid: wide-angle ceiling-showcase framing.</p></div></article>
+    </section>
+
+    <section class="resources" aria-label="Tile and grout resource">
+      <p class="eyebrow">Tile and grout resource</p>
+      <h2>Small local lead for grout color sealing</h2>
+      <p>Big Island Surface Care advertises tile and grout cleaning, sealing, and optional color sealing on Big Island. That is useful here if Paul wants the existing grout made slightly lighter or creamier while adding protection.</p>
+      <div class="resource-links">
+        <a href="https://bigislandsurfacecare.com/services/tile-grout/">Big Island Surface Care tile/grout service</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>All displayed images are local PNG assets under <code>images/</code>. External links are included only in the resource card; no remote images are embedded.</p>
+  </footer>
+</body>
+</html>
